@@ -17,10 +17,26 @@ export default function QuizSettings() {
   const [difficulty, setDifficulty] = useState("any");
 
   const getQuestions = async () => {
-    const questions = await fetch("https://opentdb.com/api.php?amount=10");
-    const questionsParsed = await questions.json();
-    handleSetQuestions(questionsParsed.results);
-    handleNext();
+    const validParams: string[] = [];
+    const params = [
+      { key: "category", value: category },
+      { key: "difficulty", value: difficulty },
+    ];
+    params.forEach((item) => {
+      if (item.value !== "any") {
+        validParams.push(`${item.key}=${item.value}`);
+      }
+    });
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/quiz?amount=${numOfQuestions}`;
+    if (validParams.length) url = url.concat("&" + validParams.join("&"));
+    try {
+      const questions = await fetch(url);
+      const questionsParsed = await questions.json();
+      handleSetQuestions(questionsParsed.results);
+      handleNext();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
