@@ -1,8 +1,17 @@
+import React, { useContext, useState } from "react";
 import { categories, difficulties } from "@/data/constants";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import { QuizContext } from "@/context/QuizContext";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 export default function QuizSettings() {
+  const { handleNext } = useContext(QuizContext);
   const [numOfQuestions, setNumOfQuestions] = useState<string | number>(10);
   const [category, setCategory] = useState("any");
   const [difficulty, setDifficulty] = useState("any");
@@ -68,6 +77,18 @@ export default function QuizSettings() {
           })}
         </Select>
       </FormControl>
+      <Box sx={{ mb: 2, ml: 1 }}>
+        <div>
+          <Button
+            variant="contained"
+            onClick={handleNext}
+            sx={{ mt: 1, mr: 1 }}
+            size="small"
+          >
+            Continue
+          </Button>
+        </div>
+      </Box>
     </>
   );
 }
