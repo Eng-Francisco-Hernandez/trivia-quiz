@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { categories, difficulties } from "@/data/constants";
+import { categories, difficulties, numberOfQuestions } from "@/data/constants";
 import { QuizContext } from "@/context/QuizContext";
 import {
   Box,
@@ -11,10 +11,17 @@ import {
 } from "@mui/material";
 
 export default function QuizSettings() {
-  const { handleNext } = useContext(QuizContext);
+  const { handleNext, handleSetQuestions } = useContext(QuizContext);
   const [numOfQuestions, setNumOfQuestions] = useState<string | number>(10);
   const [category, setCategory] = useState("any");
   const [difficulty, setDifficulty] = useState("any");
+
+  const getQuestions = async () => {
+    const questions = await fetch("https://opentdb.com/api.php?amount=10");
+    const questionsParsed = await questions.json();
+    handleSetQuestions(questionsParsed.results);
+    handleNext();
+  };
 
   return (
     <>
@@ -30,9 +37,13 @@ export default function QuizSettings() {
             setNumOfQuestions(e.target.value);
           }}
         >
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={30}>30</MenuItem>
+          {numberOfQuestions.map((item, index) => {
+            return (
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: "50%" }} size="small">
@@ -81,7 +92,7 @@ export default function QuizSettings() {
         <div>
           <Button
             variant="contained"
-            onClick={handleNext}
+            onClick={getQuestions}
             sx={{ mt: 1, mr: 1 }}
             size="small"
           >
