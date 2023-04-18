@@ -1,39 +1,84 @@
+import React, { useContext, useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+} from "@mui/material";
 import { QuizContext } from "@/context/QuizContext";
-import { Box, Button } from "@mui/material";
-import React, { useContext } from "react";
 
 export default function QuizFill() {
-  const { handleNext, handleBack, questions } = useContext(QuizContext);
+  const { handleNext, handleBack, handleSelectAnswer, questions } =
+    useContext(QuizContext);
+  const [incompleteQuiz, setIncompleteQuiz] = useState(false);
+
+  const checkValidAnswers = () => {
+    setIncompleteQuiz(false);
+    for (let index = 0; index < questions.length; index++) {
+      if (!questions[index].answered) {
+        setIncompleteQuiz(true);
+        return;
+      }
+    }
+    handleNext();
+  };
 
   return (
-    <div style={{
-        maxHeight: "60vh",
-        overflow: "scroll"
-    }}>
-      {questions.map((question, index) => {
-        return <div style={{
-            marginLeft: "20px"
-        }}>
-            <li key={index}>{question.question}</li>
-            {question.incorrect_answers.map(ans => <div>{ans}</div>)}
-            <div>{question.correct_answer}</div>
-        </div>;
-      })}
-      <Box sx={{ mb: 2, ml: 1 }}>
+    <>
+      {incompleteQuiz && (
+        <Alert severity="warning">
+          Please answer all the questions and then hit continue.
+        </Alert>
+      )}
+      <div className="quiz-questions-container">
+        <ol>
+          {questions.map((question, index) => {
+            return (
+              <div key={index}>
+                <li>{question.question}</li>
+                <Grid sx={{ mt: 2, mb: 2 }} container>
+                  {question.answers.map((answer, index) => (
+                    <Grid item key={index} xs={6} md={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={answer.selected}
+                            onChange={(e) =>
+                              handleSelectAnswer(
+                                e,
+                                question.question,
+                                answer.answer
+                              )
+                            }
+                          />
+                        }
+                        label={answer.answer}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </div>
+            );
+          })}
+        </ol>
+      </div>
+      <Box sx={{ ml: 3 }}>
         <div>
           <Button
             variant="contained"
-            onClick={handleNext}
-            sx={{ mt: 1, mr: 1 }}
+            onClick={checkValidAnswers}
+            sx={{ mt: 2, mr: 1 }}
             size="small"
           >
             Continue
           </Button>
-          <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }} size="small">
+          <Button onClick={handleBack} sx={{ mt: 2, mr: 1 }} size="small">
             Back
           </Button>
         </div>
       </Box>
-    </div>
+    </>
   );
 }

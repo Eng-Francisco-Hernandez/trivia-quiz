@@ -1,8 +1,10 @@
+export interface AnswerType {
+  answer: string;
+  selected: boolean;
+}
+
 export interface QuestionType {
-    category: string
-    type: string
-    difficulty: string
-    question: string
-    correct_answer: string
-    incorrect_answers: string[]
-  }
+  question: string;
+  answered: boolean;
+  answers: AnswerType[];
+}

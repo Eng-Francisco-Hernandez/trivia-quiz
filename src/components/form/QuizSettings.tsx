@@ -32,7 +32,7 @@ export default function QuizSettings() {
     try {
       const questions = await fetch(url);
       const questionsParsed = await questions.json();
-      handleSetQuestions(questionsParsed.results);
+      handleSetQuestions(questionsParsed);
       handleNext();
     } catch (error) {
       console.log(error);

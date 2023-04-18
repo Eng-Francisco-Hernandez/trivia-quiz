@@ -7,6 +7,11 @@ export type QuizContextType = {
   handleBack: () => void;
   handleReset: () => void;
   handleSetQuestions: (questions: QuestionType[]) => void;
+  handleSelectAnswer: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    question: string,
+    answer: string
+  ) => void;
   questions: QuestionType[];
 };
 
@@ -16,6 +21,7 @@ export const QuizContext = React.createContext<QuizContextType>({
   handleBack: () => {},
   handleReset: () => {},
   handleSetQuestions: () => {},
+  handleSelectAnswer: () => {},
   questions: [],
 });
 
@@ -39,6 +45,37 @@ export default function QuizProvider({ children }: any) {
     setQuestions(questions);
   };
 
+  const handleSelectAnswer = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    question: string,
+    answer: string
+  ) => {
+    const newQuestions = questions.map((currentQuestion) => {
+      if (currentQuestion.question === question) {
+        return {
+          ...currentQuestion,
+          answered: event.target.checked,
+          answers: currentQuestion.answers.map((currentAnswer) => {
+            if (currentAnswer.answer === answer) {
+              return {
+                ...currentAnswer,
+                selected: event.target.checked,
+              };
+            } else {
+              return {
+                ...currentAnswer,
+                selected: false,
+              };
+            }
+          }),
+        };
+      } else {
+        return currentQuestion;
+      }
+    });
+    setQuestions(newQuestions);
+  };
+
   return (
     <QuizContext.Provider
       value={{
@@ -47,6 +84,7 @@ export default function QuizProvider({ children }: any) {
         handleBack,
         handleReset,
         handleSetQuestions,
+        handleSelectAnswer,
         questions,
       }}
     >
