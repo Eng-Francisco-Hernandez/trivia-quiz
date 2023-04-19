@@ -12,7 +12,7 @@ import {
 
 export default function QuizSettings() {
   const { handleNext, handleSetQuestions } = useContext(QuizContext);
-  const [numOfQuestions, setNumOfQuestions] = useState<string | number>(10);
+  const [numOfQuestions, setNumOfQuestions] = useState<string | number>(5);
   const [category, setCategory] = useState("any");
   const [difficulty, setDifficulty] = useState("any");
 
@@ -32,7 +32,7 @@ export default function QuizSettings() {
     try {
       const questions = await fetch(url);
       const questionsParsed = await questions.json();
-      handleSetQuestions(questionsParsed);
+      handleSetQuestions(questionsParsed.questions, questionsParsed.quizId);
       handleNext();
     } catch (error) {
       console.log(error);

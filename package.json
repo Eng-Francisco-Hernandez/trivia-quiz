@@ -12,15 +12,18 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
+    "@types/uuid": "^9.0.1",
     "html-entities": "^2.3.3",
     "next": "13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.62.0",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "uuid": "^9.0.0"
   }
 }

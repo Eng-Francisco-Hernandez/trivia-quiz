@@ -9,4 +9,15 @@
   border: 1px solid rgb(194, 194, 194);
   border-radius: 5px;
   width: fit-content;
+  &.correct {
+    background-color: rgb(208, 255, 239);
+  }
+  &.incorrect {
+    background-color: rgb(255, 224, 224);
+  }
+}
+
+.question-result-container {
+  display: flex;
+  align-items: center;
 }

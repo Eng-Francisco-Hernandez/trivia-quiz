@@ -1,11 +1,12 @@
-import { Box, Button, Checkbox, FormControlLabel, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import React, { useContext } from "react";
 import { QuizContext } from "@/context/QuizContext";
 
 export default function QuizReviewAndSubmit() {
-  const { handleNext, handleBack, questions } = useContext(QuizContext);
+  const { handleNext, handleBack, questions, quizId, handleSetResults } =
+    useContext(QuizContext);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const answers: { question: string; answer: string }[] = [];
     questions.forEach((question) => {
       answers.push({
@@ -13,7 +14,19 @@ export default function QuizReviewAndSubmit() {
         answer: question.answers.filter((answer) => answer.selected)[0].answer,
       });
     });
-    console.log(answers);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/quiz`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quizId: quizId, answers: answers }),
+      }
+    );
+    const results = await response.json();
+    handleSetResults(results);
+    handleNext();
   };
 
   return (
@@ -28,13 +41,13 @@ export default function QuizReviewAndSubmit() {
                 <Grid sx={{ mt: 2, mb: 2 }} container>
                   <Grid item key={index} xs={6} md={6}>
                     {question.answers.map((answer, index) => (
-                      <>
+                      <div key={index}>
                         {answer.selected && (
                           <div className="answer-container">
                             <strong>Answer:</strong> {answer.answer}
                           </div>
                         )}
-                      </>
+                      </div>
                     ))}
                   </Grid>
                 </Grid>

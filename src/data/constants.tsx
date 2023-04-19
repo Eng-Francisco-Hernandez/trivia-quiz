@@ -91,4 +91,4 @@ export const difficulties = [
   },
 ];
 
-export const numberOfQuestions = [10, 20, 30];
+export const numberOfQuestions = [5, 10, 15, 20, 30];
