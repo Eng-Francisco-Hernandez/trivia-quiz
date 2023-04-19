@@ -1,5 +1,6 @@
 import QuizFill from "@/components/form/QuizFill";
 import QuizSettings from "@/components/form/QuizSettings";
+import QuizReviewAndSubmit from "@/components/ui/QuizReviewAndSubmit";
 
 export const steps = [
   {
@@ -12,7 +13,7 @@ export const steps = [
   },
   {
     label: "Submit quiz",
-    content: <></>,
+    content: <QuizReviewAndSubmit />,
   },
 ];
 

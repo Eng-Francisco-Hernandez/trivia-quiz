@@ -1,4 +1,12 @@
 .quiz-questions-container {
-    max-height: 60vh;
-    overflow: scroll;
+  max-height: 60vh;
+  overflow: scroll;
+}
+
+.answer-container {
+  margin: 2px;
+  padding: 0 5px;
+  border: 1px solid rgb(194, 194, 194);
+  border-radius: 5px;
+  width: fit-content;
 }
