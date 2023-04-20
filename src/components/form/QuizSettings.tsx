@@ -1,11 +1,47 @@
-import { categories, difficulties } from "@/data/constants";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { categories, difficulties, numberOfQuestions } from "@/data/constants";
+import { QuizContext } from "@/context/QuizContext";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 export default function QuizSettings() {
-  const [numOfQuestions, setNumOfQuestions] = useState<string | number>(10);
+  const { handleNext, handleSetQuestions } = useContext(QuizContext);
+  const [numOfQuestions, setNumOfQuestions] = useState<string | number>(5);
   const [category, setCategory] = useState("any");
   const [difficulty, setDifficulty] = useState("any");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getQuestions = async () => {
+    setIsLoading(true);
+    const validParams: string[] = [];
+    const params = [
+      { key: "category", value: category },
+      { key: "difficulty", value: difficulty },
+    ];
+    params.forEach((item) => {
+      if (item.value !== "any") {
+        validParams.push(`${item.key}=${item.value}`);
+      }
+    });
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/quiz?amount=${numOfQuestions}`;
+    if (validParams.length) url = url.concat("&" + validParams.join("&"));
+    try {
+      const questions = await fetch(url);
+      const questionsParsed = await questions.json();
+      handleSetQuestions(questionsParsed.questions, questionsParsed.quizId);
+      handleNext();
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <>
@@ -21,9 +57,13 @@ export default function QuizSettings() {
             setNumOfQuestions(e.target.value);
           }}
         >
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={30}>30</MenuItem>
+          {numberOfQuestions.map((item, index) => {
+            return (
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: "50%" }} size="small">
@@ -68,6 +108,21 @@ export default function QuizSettings() {
           })}
         </Select>
       </FormControl>
+      <Box sx={{ mb: 2, ml: 1 }}>
+        <Button
+          variant="contained"
+          onClick={getQuestions}
+          sx={{ mt: 1, mr: 1 }}
+          size="small"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <CircularProgress color="inherit" size={20} />
+          ) : (
+            <>Continue</>
+          )}
+        </Button>
+      </Box>
     </>
   );
 }
