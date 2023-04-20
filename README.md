@@ -1,38 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Postman Clone
 
-## Getting Started
+Application that allows you to complete a trivia quiz about some subject in particular. You can select the amount of questions, the difficulty and the category of the quiz.
+## Project Demo
 
-First, run the development server:
+To see the project go to the next [DEMO LINK](https://trivia-quiz-eng-francisco-hernandez.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Installation and Setup Instructions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Example:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Clone down this repository.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Installation:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+`yarn install`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To Start The App In Development Mode:
 
-## Learn More
+`yarn dev`
 
-To learn more about Next.js, take a look at the following resources:
+To Build The App:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`yarn build`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To Start The App:
 
-## Deploy on Vercel
+`yarn start`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To Visit The App:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[http://localhost:3000](http://localhost:3000)
+
+The application was deployed using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). 
+
+## Reflection
+
+Project built in order to have an application that creates a trivia quiz based on certain topic. You can choose that topic, the amount of questions that you want and the difficulty of the questions.
+
+The main programming language being used is TypeScript, and the technologies used to build the project are Next.js, React, Sass and MUI.
