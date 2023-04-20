@@ -4,6 +4,7 @@ import { QuizContext } from "@/context/QuizContext";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -15,8 +16,10 @@ export default function QuizSettings() {
   const [numOfQuestions, setNumOfQuestions] = useState<string | number>(5);
   const [category, setCategory] = useState("any");
   const [difficulty, setDifficulty] = useState("any");
+  const [isLoading, setIsLoading] = useState(false);
 
   const getQuestions = async () => {
+    setIsLoading(true);
     const validParams: string[] = [];
     const params = [
       { key: "category", value: category },
@@ -37,6 +40,7 @@ export default function QuizSettings() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -105,16 +109,19 @@ export default function QuizSettings() {
         </Select>
       </FormControl>
       <Box sx={{ mb: 2, ml: 1 }}>
-        <div>
-          <Button
-            variant="contained"
-            onClick={getQuestions}
-            sx={{ mt: 1, mr: 1 }}
-            size="small"
-          >
-            Continue
-          </Button>
-        </div>
+        <Button
+          variant="contained"
+          onClick={getQuestions}
+          sx={{ mt: 1, mr: 1 }}
+          size="small"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <CircularProgress color="inherit" size={20} />
+          ) : (
+            <>Continue</>
+          )}
+        </Button>
       </Box>
     </>
   );
