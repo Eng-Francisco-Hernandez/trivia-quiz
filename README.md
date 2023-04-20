@@ -1,4 +1,4 @@
-## Postman Clone
+## Trivia quiz
 
 Application that allows you to complete a trivia quiz about some subject in particular. You can select the amount of questions, the difficulty and the category of the quiz.
 ## Project Demo
